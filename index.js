@@ -11,7 +11,7 @@ module.exports = function (fileName) {
     throw new PluginError('gulp-concat-json', 'Missing fileName option for gulp-concat-json');
   }
 
-  var data = [];
+  var data = {};
   var firstFile = null;
 
   function bufferContents(file) {
@@ -26,7 +26,7 @@ module.exports = function (fileName) {
       return this.emit('error', new PluginError('gulp-concat-json', 'Streaming not supported'));
     }
 
-    data.push(JSON.parse(file.contents.toString()));
+    data[path.basename(file.path, '.json')] = JSON.parse(file.contents.toString());
   }
 
   function endStream() {
